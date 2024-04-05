@@ -19,10 +19,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView teleMathTextView;
     private int colorIndex = 0;
     private final int[] colors = {Color.RED, Color.GREEN, Color.BLUE};
 
+
+
+    //se define un object textview
+    private TextView textView;
 
 
 
@@ -32,8 +35,15 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        teleMathTextView = findViewById(R.id.textView4);
-        registerForContextMenu(teleMathTextView);
+
+        //se va a guardar en el textview4 q es el que meustra lo de telemath
+        textView = findViewById(R.id.textView4);
+
+        // Registrar el menú contextual para el TextView
+        registerForContextMenu(textView);
+
+
+
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -48,40 +58,45 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         getMenuInflater().inflate(R.menu.context_menu, menu);
     }
 
-    // Método para manejar las acciones al seleccionar una opción del menú contextual
-    /*@Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.blue_option:
-                changeTextColor(Color.BLUE);
-                return true;
-            case R.id.green_option:
-                changeTextColor(Color.GREEN);
-                return true;
-            case R.id.red_option:
-                changeTextColor(Color.RED);
-                return true;
-            default:
-                return super.onContextItemSelected(item);
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.green) {
+            textView.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+            return true;
+        } else if (id == R.id.blue) {
+            textView.setTextColor(getResources().getColor(android.R.color.holo_blue_dark));
+            return true;
+
+
+
+
+
+
+
+        } else if (id == R.id.red) {
+            textView.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            return true;
         }
+
+        return super.onContextItemSelected(item);
     }
 
 
 
 
-     */
 
-    // Método para cambiar el color del TextView
-    private void changeTextColor(int color) {
-        teleMathTextView.setTextColor(color);
-    }
+
+
+
+
 
 
 
@@ -121,14 +136,6 @@ public class MainActivity extends AppCompatActivity {
         //se procede a mandar
         startActivity(intent);
 
-    }
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu4_main,menu);
-        return true;
     }
 
 
